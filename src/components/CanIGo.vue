@@ -4,8 +4,7 @@
     <h3 class="m-8 text-2xl text-black text-opacity-50">Fancy a pint today?</h3>
     <h2 class="text-6xl md:text-8xl">{{randomQuote}}</h2>
   </div>
-
-    <button class="mt-48 text-black text-opacity-30 focus:outline-none" @click="refreshQuote">Refresh me</button>
+        <button class="rounded mt-48 p-2 text-black border-2 border-solid text-opacity-70 focus:outline-none" @click="refreshQuote">Press me to update</button>
     <h3 class="m-8 text-2xl text-black text-opacity-50 uppercase">Time until pubs reopen:</h3> 
     <h2 class="text-2xl md:text-2xl">
     {{timeToDisplay}}
