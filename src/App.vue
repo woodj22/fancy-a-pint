@@ -1,26 +1,24 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" class="flex items-center justify-center h-screen bg-red">
+  <CanIGo class="text-center"/>
+  </div>
+
+      <footer class="text-uderline bg-red text-center">
+    <button class="underline background-transparent outline-none focus:outline-none" type="button" style="transition: all .15s ease">
+  <a href="https://woodj22.github.io/#/">Made by Me </a>
+</button>
+    </footer>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CanIGo from './components/CanIGo.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    CanIGo
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
