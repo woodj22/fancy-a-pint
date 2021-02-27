@@ -5,7 +5,7 @@
     <h2 class="text-6xl md:text-8xl">{{randomQuote}}</h2>
   </div>
         <button class="rounded mt-48 p-2 text-black border-2 border-solid text-opacity-70 focus:outline-none" @click="refreshQuote">Press me to update</button>
-    <h3 class="m-8 text-2xl text-black text-opacity-50 uppercase">Time until pubs reopen:</h3> 
+    <h3 class="m-8 text-2xl text-black text-opacity-50 uppercase">Time until UK pubs reopen:</h3> 
     <h2 class="text-2xl md:text-2xl">
     {{timeToDisplay}}
     </h2>
@@ -30,12 +30,18 @@ export default {
             "Mate, we are locked down.",
             "Are you being silly?!?",
             "listen, we are all thirsty, but we can't go just yet.",
-            "Soon they shall be open and we shall rejoice!",
+            "Soon, the pubs will be open and we shall rejoice!",
             "You know there's a pandemic happening.",
             "Nope.",
             "Nope, bless'd be the pub garden. 🍻",
             "You having a bubble bath?!? 🛀",
             "No can do.",
+            "Maybe sometime in April, we shall see.",
+            "🙃 🍻 ⛔ 🍻 ⛔ 🍻 🙃",
+            "No can do. Still in lockdown 😥",
+            "It's a no from me.",
+            "🚨  🚨  🚨  🚨",
+            "I'm hella thirsty but we got to stay safe.",
             "Could do with a quick one, but pubs arn't open yet.",
             "potentially, but we are in lockdown.",
             "No.",
