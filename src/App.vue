@@ -3,11 +3,14 @@
   <CanIGo class="text-center"/>
   </div>
 
-      <footer class="text-uderline bg-red text-center">
-    <button class="underline background-transparent outline-none focus:outline-none" type="button" style="transition: all .15s ease">
+      <footer class="text-uderline bg-red text-center flex-grow items-center">
+    <button class="p-4 underline background-transparent outline-none focus:outline-none" type="button" style="transition: all .15s ease">
   <a href="https://woodj22.github.io/#/">Made by Me </a>
 </button>
-    </footer>
+<button class="p-4 underline background-transparent outline-none focus:outline-none" type="button" style="transition: all .15s ease">
+  <a href="https://woodj22.github.io/#/">Inspired by This </a>
+</button>
+  </footer>
 
 </template>
 
