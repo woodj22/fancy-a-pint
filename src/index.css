@@ -2,11 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap'); */
 @layer base {
     @font-face {
       font-family: 'Roboto';
       font-weight: 400;
       src: url(./fonts/Roboto/Roboto-Bold.ttf) format("truetype");
+        }
+    @font-face {
+      font-family: 'digitaldream';
+      font-weight: 800;
+      src: url(./fonts/DigitalDream/DIGITALDREAMFAT.ttf) format("truetype");
         }
   }

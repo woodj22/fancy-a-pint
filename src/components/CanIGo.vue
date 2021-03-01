@@ -6,7 +6,7 @@
   </div>
         <button class="rounded mt-48 p-2 text-black border-2 border-solid text-opacity-70 focus:outline-none" @click="refreshQuote">Press me to update</button>
     <h3 class="m-8 text-2xl text-black text-opacity-50 uppercase">Time until UK pubs reopen:</h3> 
-    <h2 class="text-2xl md:text-2xl">
+    <h2 class="text-2xl md:text-2xl font-digitaldream">
     {{timeToDisplay}}
     </h2>
   </div>

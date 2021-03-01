@@ -10,7 +10,8 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        'sans': ['Roboto', 'Helvetica', 'Arial', 'sans-serif']
+        'sans': ['Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+        'digitaldream': ["digitaldream"]
       }
     },
   },
