@@ -1,5 +1,8 @@
 <template>
-<div class="CanIGo">
+  <div id="app" class="flex flex-grow items-center justify-center h-screen bg-red">
+
+<div id="CanIGo" class="text-center md:w-3/4 bg-red">
+
   <div class="uppercase h-48">
     <h3 class="m-8 text-2xl text-black text-opacity-50">Fancy a pint today?</h3>
     <h2 class="text-6xl md:text-8xl">{{randomQuote}}</h2>
@@ -9,7 +12,18 @@
     <h2 class="text-2xl md:text-2xl font-digitaldream">
     {{timeToDisplay}}
     </h2>
+        <footer class="text-uderline bg-red text-center flex-grow items-center">
+    <button class="p-4 underline background-transparent outline-none focus:outline-none" type="button" style="transition: all .15s ease">
+  <a href="https://woodj22.github.io/#/">Made by Me </a>
+</button>
+<button class="p-4 underline background-transparent outline-none focus:outline-none" type="button" style="transition: all .15s ease">
+  <a href="https://shouldideploy.today/">Inspired by This </a>
+</button>
+  </footer>
+
   </div>
+  </div>
+
 </template>
 
 <script>

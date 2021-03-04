@@ -7,7 +7,6 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "deploy": "vue-cli-service build && aws s3 sync ./dist s3://${BUCKET:-www.fancyapint.today} --profile=joewood && aws cloudfront create-invalidation --distribution-id EK9RJCBIQJMA --paths '/*' --profile=joewood"
-
   },
   "dependencies": {
     "@tailwindcss/postcss7-compat": "^2.0.3",
@@ -15,7 +14,8 @@
     "core-js": "^3.6.5",
     "postcss": "^7.0.35",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3",
-    "vue": "^3.0.0"
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
