@@ -19,8 +19,8 @@ export default {
   },
   data:() => {
       return {
-          endDate: new Date(2021, 4, 12, 0, 0),
-          timeToDisplay: "Month Days Hours Minutes Seconds",
+          endDate: new Date(2021, 7, 31, 0, 0),
+          timeToDisplay: "Months Days Hours Minutes Seconds",
           backgroundColor: "flex flex-grow items-center justify-center h-screen bg-white",
           toggled: true
       }
@@ -46,10 +46,10 @@ export default {
           var minute  = diffDate.getMinutes();
           var seconds = diffDate.getSeconds(); 
         
-          this.timeToDisplay = month + " Month " + day + " Days " + hour + " Hours " + minute + " Minutes " + seconds + " Seconds"
+          this.timeToDisplay = month + " Months " + day + " Days " + hour + " Hours " + minute + " Minutes " + seconds + " Seconds"
           this.toggled = !this.toggled
           this.createCountDown()
-      }, 1000)
+      }, 300)
         
       }
   }
