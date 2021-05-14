@@ -31,12 +31,55 @@
 <script>
 export default {
   name: 'JoeAndVi',
-
+    mounted() {
+    this.updateWheelSpinSpeed()
+  },
   data:() => {
       return {
          
       }
   },
+   methods: {
+    updateWheelSpinSpeed(){
+        //  This function will change the speed of rotation the closer the time is to midnight
+      const now = new Date().getTime();
+      
+      var rotate_amount = "-360"
+
+      const five_oclock = new Date().setHours(17)
+      if (now >= five_oclock) {
+        rotate_amount =  "-360"
+      }
+
+      const eight_oclock = new Date().setHours(20)
+      if (now >= eight_oclock) {
+        rotate_amount =  "-720"
+      }
+
+      const nine_oclock = new Date().setHours(21)
+      if (now >= nine_oclock) {
+        rotate_amount =  "-1440"
+      }
+
+      const ten_oclock = new Date().setHours(22)
+      if (now >= ten_oclock) {
+        rotate_amount =  "-2880"
+      }
+
+      const twelve_oclock = new Date().setHours(23)
+      if (now >= twelve_oclock) {
+        rotate_amount =  "-8640"
+      }
+
+      // This if statement will make the wheel spin fast if the time is after 12. 
+      if (new Date().getHours() < 6) {
+           rotate_amount =  "-8640"
+      }
+
+      const canvas = document.getElementById('wheel');
+      canvas.style.transform = "rotate(" + rotate_amount + "deg)";    
+      }
+  }
 
 }
 </script>
@@ -118,9 +161,7 @@ export default {
     transform: none;
   }
   
-  100% {
-    transform: rotate(-720deg);
-  } 
+
 }
 
 .wheel::before {
