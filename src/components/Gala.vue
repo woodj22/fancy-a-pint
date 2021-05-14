@@ -47,7 +47,6 @@ export default {
           var seconds = diffDate.getSeconds(); 
         
           this.timeToDisplay = month + " Months " + day + " Days " + hour + " Hours " + minute + " Minutes " + seconds + " Seconds"
-          this.toggled = !this.toggled
           this.createCountDown()
       }, 300)
         
