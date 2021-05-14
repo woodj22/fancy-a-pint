@@ -11,6 +11,7 @@ const routes = [
   { path: '/gala', component: Gala },
   { path: '/', component: CanIGo },
   { path: '/joeandvi', component: JoeAndVi },
+  { path: "/:pathMatch(.*)", component: CanIGo }
 ]
 
 const router = createRouter({
