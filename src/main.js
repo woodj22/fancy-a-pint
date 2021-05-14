@@ -4,7 +4,7 @@ import './index.css'
 import Gala from './components/Gala'
 import CanIGo from './components/CanIGo'
 import JoeAndVi from './components/JoeAndVi'
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 
 
 const routes = [
@@ -14,11 +14,9 @@ const routes = [
 ]
 
 const router = createRouter({
-history: createWebHashHistory(),
+history: createWebHistory(),
 routes, 
 })
-  
-
   
 
 createApp(App).use(router).mount('#app')
