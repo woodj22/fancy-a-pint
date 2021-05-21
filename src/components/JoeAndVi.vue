@@ -1,7 +1,6 @@
 <template>
-
+<div>
 <body>
-
   <div class="box-canvas">
     <div class="wheel-leg left"></div>
     <div class="wheel-leg right"></div>
@@ -22,24 +21,64 @@
 
     <h2 class="m-8 text-2xl text-black text-opacity-50 uppercase">Will Joe and Vi Stay for 2 pints? </h2> 
     <h3 class="m-8 text-black text-opacity-70 uppercase">Place your vote! </h3> 
-         <button class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none">Yes</button>
-        <button class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none">No</button>
+         <button v-on:click="incrementVoteCount('yes')" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none">Yes</button>
+        <button  v-on:click="incrementVoteCount('no')" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none">No</button>
     </div>
+    {{drinkVote['yes_count']}}
+    {{drinkVote['no_count']}}
+    {{drinkVote['date']}}
 </body>
+</div>
 </template>
 
 <script>
+import { useStore } from 'vuex'
+import { mounted } from 'vue'
+
 export default {
   name: 'JoeAndVi',
-    mounted() {
-    this.updateWheelSpinSpeed()
-  },
+//     mounted() {
+//     this.updateWheelSpinSpeed() 
+//   },
   data:() => {
       return {
-         
+          drinkVote: {
+              'date': new Date().toISOString().split('T')[0],
+              'yes_count':0,
+              'no_count':0
+          }  
       }
   },
+setup() {
+    const store = useStore();
+    console.log(store);
+    console.log(store.dispatch('postDrinkVote'));
+     return {
+      asyncPostDrinkVote: () => store.dispatch('postDrinkVote')
+    }
+  },
    methods: {
+    incrementVoteCount: function(type){
+        if (type == "yes"){
+            let payload = {
+              'date': new Date().toISOString().split('T')[0],
+              'yes_count':1,
+              'no_count':0
+            }
+            // console.log(store)
+            console.log(this.asyncPostDrinkVote())
+            // this.$store.dispatch('postDrinkVote', payload)
+        }
+        if (type == "no"){
+            let payload = {
+              'date': new Date().toISOString().split('T')[0],
+              'yes_count':0,
+              'no_count':1
+            }  
+            // this.$store.commit('postDrinkVote', payload)
+        }
+        
+    },
     updateWheelSpinSpeed(){
         //  This function will change the speed of rotation the closer the time is to midnight
       const now = new Date().getTime();
@@ -90,8 +129,6 @@ export default {
   --wheel-color: #01827F;
   --hamster-color: #F4B874;
 }
-
-
 
 .box-canvas{
   position: relative;

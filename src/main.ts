@@ -1,10 +1,13 @@
 import { createApp } from 'vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 import App from './App.vue'
 import './index.css'
-import Gala from './components/Gala'
-import CanIGo from './components/CanIGo'
-import JoeAndVi from './components/JoeAndVi'
+import Gala from './components/Gala.vue'
+import CanIGo from './components/CanIGo.vue'
+import JoeAndVi from './components/JoeAndVi.vue'
 import { createRouter, createWebHashHistory } from "vue-router";
+import { store } from './store'
 
 
 const routes = [
@@ -19,4 +22,4 @@ history: createWebHashHistory(),
 routes, 
 })
   
-createApp(App).use(router).mount('#app')
+createApp(App).use(router, VueAxios, axios, store).mount('#app')
