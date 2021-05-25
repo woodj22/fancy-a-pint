@@ -13,8 +13,8 @@ export default {
       return baseRequest()
       .get( 'votes/' + date)
     },
-    postDrinkVote (payload) {
+    postDrinkVote (payload: { [x: string]: any; }) {
         return baseRequest()
-        .post( 'votes/' + payload['date'], data={'yes_count': payload['yes_count'], 'no_count': payload['no_count']})
+        .post( 'votes/' + payload['date'])
       }
   } 

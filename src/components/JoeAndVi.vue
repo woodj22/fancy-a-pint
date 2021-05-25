@@ -51,8 +51,8 @@ export default {
   },
 setup() {
     const store = useStore();
-    console.log(store);
     console.log(store.dispatch('postDrinkVote'));
+    // console.log(this.$store.dispatch('postDrinkVote'));
      return {
       asyncPostDrinkVote: () => store.dispatch('postDrinkVote')
     }

@@ -33,6 +33,7 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.9.0",
+    "tsconfig-paths-webpack-plugin": "^3.5.1",
     "typescript": "~4.1.5"
   },
   "eslintConfig": {
