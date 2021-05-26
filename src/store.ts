@@ -1,36 +1,25 @@
-// export const key: InjectionKey<Store<State>> = Symbol()
 import client from '~/api-client'
-
-
-import { InjectionKey } from 'vue'
 import { createStore, useStore as baseUseStore, Store } from 'vuex'
 
-
 export const store = createStore({
-  state: {
+state: {
       drinkVote: []
 },
 mutations: {
   setDrinkVote (state, dateVote) {
-   state.drinkVote = dateVote
+   state.drinkVote = dateVote.data
   },
 },
 actions: {
-  // getDrinkVote ({ commit }, date) {
-  //   return client
-  //     .getDrinkVote(date)
-  //     .then(dateVote => commit('setDrinkVote', dateVote))
-  // },
+  async getDrinkVote ({ commit }, date) {
+      const drinkVote = await client.getDrinkVote(date)
+      commit('setDrinkVote', drinkVote.data)
+      return { drinkVote }
+  },
   async postDrinkVote ({ commit }, payload) {
-      const drinkVote = client
-        .postDrinkVote(payload['date'])
-        commit('setDrinkVote', drinkVote)
+        const drinkVote = await client.postDrinkVote(payload)
+        commit('setDrinkVote', drinkVote.data)
         return { drinkVote }
     },
 }
 })
-
-// // define your own `useStore` composition function
-// export function useStore () {
-//   return baseUseStore(key)
-// }

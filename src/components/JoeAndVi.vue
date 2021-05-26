@@ -24,58 +24,55 @@
          <button v-on:click="incrementVoteCount('yes')" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none">Yes</button>
         <button  v-on:click="incrementVoteCount('no')" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none">No</button>
     </div>
-    {{drinkVote['yes_count']}}
+    {{drinkVote.date}}
     {{drinkVote['no_count']}}
-    {{drinkVote['date']}}
+    {{drinkVote['yes_count']}}
 </body>
 </div>
 </template>
 
 <script>
-import { useStore } from 'vuex'
+import { useStore, mapState, mapGetters } from 'vuex'
 import { mounted } from 'vue'
 
 export default {
   name: 'JoeAndVi',
-//     mounted() {
-//     this.updateWheelSpinSpeed() 
-//   },
-  data:() => {
-      return {
-          drinkVote: {
-              'date': new Date().toISOString().split('T')[0],
-              'yes_count':0,
-              'no_count':0
-          }  
-      }
+    mounted() {
+        // TODO - update this mounted method to be vue3 in style. 
+    this.updateWheelSpinSpeed() 
+    this.asyncGetDrinkVote('2021-05-26')
+
   },
-setup() {
+  computed: mapState({
+    drinkVote: state => state.drinkVote
+  }, 
+  ),
+  setup() {
     const store = useStore();
-    console.log(store.dispatch('postDrinkVote'));
-    // console.log(this.$store.dispatch('postDrinkVote'));
      return {
-      asyncPostDrinkVote: () => store.dispatch('postDrinkVote')
+      asyncPostDrinkVote: (payload) => store.dispatch('postDrinkVote', payload),
+      asyncGetDrinkVote: (date) => store.dispatch('getDrinkVote', date)
     }
   },
    methods: {
-    incrementVoteCount: function(type){
+    incrementVoteCount: async function(type){
         if (type == "yes"){
             let payload = {
               'date': new Date().toISOString().split('T')[0],
-              'yes_count':1,
-              'no_count':0
+              'yes_increment': 1,
+              'no_increment': 0
             }
-            // console.log(store)
-            console.log(this.asyncPostDrinkVote())
-            // this.$store.dispatch('postDrinkVote', payload)
+            await this.asyncPostDrinkVote(payload);
+            // console.log(this.$store.state.drinkVote.data)
+            // this.drinkVote = drinkVote()
         }
         if (type == "no"){
             let payload = {
               'date': new Date().toISOString().split('T')[0],
-              'yes_count':0,
-              'no_count':1
+              'yes_increment': 0,
+              'no_increment': 1
             }  
-            // this.$store.commit('postDrinkVote', payload)
+             this.asyncPostDrinkVote(payload);
         }
         
     },

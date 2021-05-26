@@ -13,8 +13,8 @@ export default {
       return baseRequest()
       .get( 'votes/' + date)
     },
-    postDrinkVote (payload: { [x: string]: any; }) {
+    postDrinkVote (payload={}) {
         return baseRequest()
-        .post( 'votes/' + payload['date'])
+        .post( 'votes/' + payload['date'], JSON.stringify({yes_increment: payload['yes_increment'], no_increment: payload['no_increment']}))
       }
   } 
