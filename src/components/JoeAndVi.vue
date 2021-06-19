@@ -24,29 +24,61 @@
          <button v-on:click="incrementVoteCount('yes')" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none">Yes</button>
         <button  v-on:click="incrementVoteCount('no')" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none">No</button>
     </div>
-    {{drinkVote.date}}
-    {{drinkVote['no_count']}}
-    {{drinkVote['yes_count']}}
+    {{state.chartData}}
+    {{this.addData}}
+    <YesNoBar v-bind:chartData="state.chartData" v-bind:chartOptions="state.chartOptions" YesNoBar/>
 </body>
 </div>
 </template>
 
 <script>
 import { useStore, mapState, mapGetters } from 'vuex'
-import { mounted } from 'vue'
-
+import YesNoBar from './YesNoBar'
 export default {
   name: 'JoeAndVi',
-    mounted() {
-        // TODO - update this mounted method to be vue3 in style. 
-    this.updateWheelSpinSpeed() 
-    this.asyncGetDrinkVote('2021-05-26')
-
+  components: {
+    YesNoBar
   },
-  computed: mapState({
-    drinkVote: state => state.drinkVote
-  }, 
-  ),
+data () {
+    return {
+      hihi: 1,
+      state: {
+          chartData: {
+          datasets: [
+            {
+              label: 'Total Votes',
+              data: this.addData,
+             backgroundColor: '#80CBC4'
+            },
+          ],
+          // These labels appear in the legend and in the tooltips when hovering different arcs
+          labels: ['Yes', 'No']
+        },
+        chartOptions: {
+          responsive: true
+        }
+      }
+    }
+},
+ async mounted() {
+    // TODO - update this mounted method to be vue3 in style. 
+    this.updateWheelSpinSpeed() 
+    // await this.asyncGetDrinkVote('2021-05-26')
+  },
+  async afterMount() {
+      await this.setChartData()
+  },
+   created() {
+    this.asyncGetDrinkVote('2021-05-26')
+  },
+  computed: {
+    ...mapState({drinkVote: state => state.drinkVote}),
+    compiledData () {
+    return {
+      addData: [70,0,0]
+    }
+  }
+  },
   setup() {
     const store = useStore();
      return {
@@ -55,6 +87,14 @@ export default {
     }
   },
    methods: {
+    setChartData() {
+      console.log('hello world')
+      this.state.chartData.data = [70,0,0]
+    },
+    // getDrinkVote() {
+    //   const store = useStore();
+    //   store.dispatch('getDrinkVote', date)
+    // },
     incrementVoteCount: async function(type){
         if (type == "yes"){
             let payload = {

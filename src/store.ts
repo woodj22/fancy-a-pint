@@ -3,7 +3,7 @@ import { createStore, useStore as baseUseStore, Store } from 'vuex'
 
 export const store = createStore({
 state: {
-      drinkVote: []
+      drinkVote: ['hello']
 },
 mutations: {
   setDrinkVote (state, dateVote) {
@@ -13,7 +13,7 @@ mutations: {
 actions: {
   async getDrinkVote ({ commit }, date) {
       const drinkVote = await client.getDrinkVote(date)
-      commit('setDrinkVote', drinkVote.data)
+      commit('setDrinkVote', await drinkVote.data)
       return { drinkVote }
   },
   async postDrinkVote ({ commit }, payload) {
