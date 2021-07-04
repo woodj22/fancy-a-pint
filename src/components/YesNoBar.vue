@@ -23,18 +23,6 @@ export default defineComponent({
   }), 
   mounted() {
     this.renderChart(this.chartData, this.chartOptions)
-    console.log("yesCount: " + this.drinkVote)
-//     this.renderChart({
-//       labels: ['Yes', 'No'],
-//       datasets: [
-//         {
-//           label: 'Total Votes',
-//           backgroundColor: '#80CBC4',
-//           data: [this.yesCount, this.noCount,0]
-//         }
-//       ]
-//     })
-
   },
 })
 </script>

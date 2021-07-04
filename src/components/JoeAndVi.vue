@@ -22,11 +22,9 @@
     <h2 class="m-8 text-2xl text-black text-opacity-50 uppercase">Will Joe and Vi Stay for 2 pints? </h2> 
     <h3 class="m-8 text-black text-opacity-70 uppercase">Place your vote! </h3> 
          <button v-on:click="incrementVoteCount('yes')" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none">Yes</button>
-        <button  v-on:click="incrementVoteCount('no')" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none">No</button>
+         <button  v-on:click="incrementVoteCount('no')" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none">No</button>
     </div>
-    {{state.chartData}}
-    {{this.addData}}
-    <YesNoBar v-bind:chartData="state.chartData" v-bind:chartOptions="state.chartOptions" YesNoBar/>
+    <YesNoBar v-bind:chartData="this.setDataset" v-bind:chartOptions="state.chartOptions" YesNoBar/>
 </body>
 </div>
 </template>
@@ -39,18 +37,10 @@ export default {
   components: {
     YesNoBar
   },
-data () {
+  data () {
     return {
-      hihi: 1,
       state: {
           chartData: {
-          datasets: [
-            {
-              label: 'Total Votes',
-              data: this.addData,
-             backgroundColor: '#80CBC4'
-            },
-          ],
           // These labels appear in the legend and in the tooltips when hovering different arcs
           labels: ['Yes', 'No']
         },
@@ -63,21 +53,28 @@ data () {
  async mounted() {
     // TODO - update this mounted method to be vue3 in style. 
     this.updateWheelSpinSpeed() 
-    // await this.asyncGetDrinkVote('2021-05-26')
   },
-  async afterMount() {
-      await this.setChartData()
-  },
-   created() {
-    this.asyncGetDrinkVote('2021-05-26')
+  async created() {
+    let date = new Date()
+    let formatedDate = date.getFullYear() + "-" + ('0' + (date.getMonth() + 1)).slice(-2) + "-" + ('0' + date.getDate()).slice(-2)
+
+    await this.asyncGetDrinkVote(formatedDate)
   },
   computed: {
     ...mapState({drinkVote: state => state.drinkVote}),
-    compiledData () {
-    return {
-      addData: [70,0,0]
+    setDataset(){
+      return {
+          datasets: [
+            {
+              label: 'Total Votes',
+              data: [this.drinkVote['yes_count'], this.drinkVote['no_count'], 0],
+              backgroundColor: '#80CBC4'
+            },
+          ],
+          // These labels appear in the legend and in the tooltips when hovering different arcs
+          labels: ['Yes', 'No']   
     }
-  }
+    }
   },
   setup() {
     const store = useStore();
@@ -87,14 +84,6 @@ data () {
     }
   },
    methods: {
-    setChartData() {
-      console.log('hello world')
-      this.state.chartData.data = [70,0,0]
-    },
-    // getDrinkVote() {
-    //   const store = useStore();
-    //   store.dispatch('getDrinkVote', date)
-    // },
     incrementVoteCount: async function(type){
         if (type == "yes"){
             let payload = {
@@ -103,8 +92,6 @@ data () {
               'no_increment': 0
             }
             await this.asyncPostDrinkVote(payload);
-            // console.log(this.$store.state.drinkVote.data)
-            // this.drinkVote = drinkVote()
         }
         if (type == "no"){
             let payload = {
