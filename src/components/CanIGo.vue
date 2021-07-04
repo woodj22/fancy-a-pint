@@ -1,18 +1,13 @@
 <template>
-  <div id="app" class="flex flex-grow items-center justify-center h-screen bg-red">
+  <div id="app" class="flex flex-grow items-center justify-center h-screen" :class="backgroundColour">
 
-<div id="CanIGo" class="text-center md:w-3/4 bg-red">
-
+<div id="CanIGo" class="text-center md:w-3/4">
   <div class="uppercase h-48">
     <h3 class="m-8 text-2xl text-black text-opacity-50">Fancy a pint today?</h3>
     <h2 class="text-6xl md:text-8xl">{{randomQuote}}</h2>
   </div>
         <button class="rounded mt-48 p-2 text-black border-2 border-solid text-opacity-70 focus:outline-none" @click="refreshQuote">Press me to update</button>
-    <h3 class="m-8 text-2xl text-black text-opacity-50 uppercase">Time until UK pubs reopen:</h3> 
-    <h2 class="text-2xl md:text-2xl font-digitaldream">
-    {{timeToDisplay}}
-    </h2>
-        <footer class="text-uderline bg-red text-center flex-grow items-center">
+        <footer class="text-uderline text-center flex-grow items-center" :class="backgroundColour">
     <button class="p-4 underline background-transparent outline-none focus:outline-none" type="button" style="transition: all .15s ease">
   <a href="https://woodj22.github.io/#/">Made by Me </a>
 </button>
@@ -20,10 +15,8 @@
   <a href="https://shouldideploy.today/">Inspired by This </a>
 </button>
   </footer>
-
   </div>
   </div>
-
 </template>
 
 <script>
@@ -31,64 +24,42 @@ export default {
   name: 'CanIGo',
   created() {
     this.refreshQuote()
-    this.createCountDown()
   },
   data:() => {
       return {
           randomQuote: "No",
           currentRandomNumber: null,
-          endDate: new Date(2021, 4, 12, 0, 0),
-          timeToDisplay: "Month Days Hours Minutes Seconds",
-          quotes: [
-            "Nah.",
-            "Mate, we are locked down.",
-            "Are you being silly?!?",
-            "listen, we are all thirsty, but we can't go just yet.",
-            "Soon, the pubs will be open and we shall rejoice!",
-            "You know there's a pandemic happening.",
-            "Nope.",
-            "Nope, bless'd be the pub garden. 🍻",
-            "You having a bubble bath?!? 🛀",
-            "No can do.",
-            "Maybe sometime in April, we shall see.",
-            "🙃 🍻 ⛔ 🍻 ⛔ 🍻 🙃",
-            "No can do. Still in lockdown 😥",
-            "It's a no from me.",
-            "🚨  🚨  🚨  🚨",
-            "I'm hella thirsty but we got to stay safe.",
-            "Could do with a quick one, but pubs arn't open yet.",
-            "potentially, but we are in lockdown.",
-            "No.",
-            "🤦🤦🏽‍♀️🙅‍♀️🙅🏾‍♂️"
-          ]
+          backgroundColour: "bg-green",
+          weeklyQuotes: {
+            "yes" : {"colour": "bg-green", "quotes" : ["😍🍺","Always and forever.", "🍺👍🍺👍🍺👍🍺👍🍺👍🍺 ","🍻YURRRP🍻", "Hell yes.", "Which pub? That is the real question.", "I am gagging for a pint!", "Pub. Now.", "lets get them in.", "Who is buying the first round?", "I could do with a cold one. YES!", "yes🍺yes🍺yes"]},
+            "no" : {"colour": "bg-red", "quotes" : ["❌❌❌🍺❌❌❌","hell no", "its a no from me.", "Another day, just not today.", "Had a rough weekend. Taking it easy."]},
+            "maybe" : {"colour": "bg-amber", "quotes" :["I could be persuaded", "Hmmm im not sure. Maybe?", "its been a long week...", "oh I dont know."]}
+          }
       }
   },
   methods: {
     refreshQuote(){
-      var random = Math.floor(Math.random() * this.quotes.length)
+      const dayOfWeek = new Date().getDay()
+      // By default I have set it to be answering yes.
+      let weeklyQuoteSelection = "yes"
+      // 4 is a wednesday 
+      if(dayOfWeek == 4) {
+        weeklyQuoteSelection = "maybe"
+      }
+      // 3 is a tuesday. Anything before 3 will be answering no.
+      if (dayOfWeek <= 3) {
+        weeklyQuoteSelection = "no"
+      }
+      const quotes =  this.weeklyQuotes[weeklyQuoteSelection]['quotes']
+      var random = Math.floor(Math.random() * quotes.length)
       // this is so you will never get the same quote twice on one go
       while(random ==this.currentRandomNumber){
-        random = Math.floor(Math.random() * this.quotes.length);
+        random = Math.floor(Math.random() * quotes.length);
       }
+      this.backgroundColour = this.weeklyQuotes[weeklyQuoteSelection]['colour']
       this.currentRandomNumber = random
-      this.randomQuote = this.quotes[random]
-    }, 
-    createCountDown(){
-      const today = new Date();
-      var diff =  this.endDate - today
-      setTimeout(() => {
-          const diffDate = new Date(diff);
-          var month   = diffDate.getMonth() -1 ;
-          var day     = diffDate.getDate();
-          var hour    = diffDate.getHours();
-          var minute  = diffDate.getMinutes();
-          var seconds = diffDate.getSeconds(); 
-          
-          this.timeToDisplay = month + " Month " + day + " Days " + hour + " Hours " + minute + " Minutes " + seconds + " Seconds"
-          this.createCountDown()
-      }, 1000)
-        
-      }
+      this.randomQuote = quotes[random]
+    }
   }
 }
 </script>
