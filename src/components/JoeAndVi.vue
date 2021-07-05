@@ -21,10 +21,12 @@
 
     <h2 class="m-8 text-2xl text-black text-opacity-50 uppercase">Will Joe and Vi Stay for 2 pints? </h2> 
     <h3 class="m-8 text-black text-opacity-70 uppercase">Place your vote! </h3> 
-         <button v-on:click="incrementVoteCount('yes')" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none">Yes</button>
-         <button  v-on:click="incrementVoteCount('no')" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none">No</button>
+         <button  v-if="!showBarChart" v-on:click="incrementVoteCount('yes');showBarChart=true" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none">Yes</button>
+         <button  v-if="!showBarChart" v-on:click="incrementVoteCount('no');showBarChart=true" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none">No</button>
     </div>
-    <YesNoBar v-bind:chartData="this.setDataset" v-bind:chartOptions="state.chartOptions" YesNoBar/>
+    <transition name="slide-fade">
+        <YesNoBar v-if="showBarChart" v-bind:chartData="this.setDataset" v-bind:chartOptions="state.chartOptions" YesNoBar/>
+    </transition>
 </body>
 </div>
 </template>
@@ -39,6 +41,7 @@ export default {
   },
   data () {
     return {
+      showBarChart: false,
       state: {
           chartData: {
           // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -372,6 +375,15 @@ export default {
   }
 }
 
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: opacity 2.0s ease;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  opacity: 0;
+}
 
 @keyframes moveBackLeg {
   0% {

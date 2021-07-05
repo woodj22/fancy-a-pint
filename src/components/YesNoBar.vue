@@ -17,12 +17,6 @@ export default defineComponent({
       type: Object,
       required: false
     },
-  },
-   computed: mapState({
-    drinkVote: state => state.drinkVote
-  }), 
-  mounted() {
-    this.renderChart(this.chartData, this.chartOptions)
-  },
+  }
 })
 </script>
