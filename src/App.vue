@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class="flex flex-grow items-center justify-center h-screen">
+    <div id="app" class="flex flex-grow justify-center h-screen">
    <router-view/>
   </div>
 </template>

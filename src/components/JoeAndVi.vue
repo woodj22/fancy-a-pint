@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="p-24">
 <body>
   <div class="box-canvas">
     <div class="wheel-leg left"></div>
@@ -21,12 +21,16 @@
 
     <h2 class="m-8 text-2xl text-black text-opacity-50 uppercase">Will Joe and Vi Stay for 2 pints? </h2> 
     <h3 class="m-8 text-black text-opacity-70 uppercase">Place your vote! </h3> 
-         <button  v-if="!showBarChart" v-on:click="incrementVoteCount('yes');showBarChart=true" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none">Yes</button>
-         <button  v-if="!showBarChart" v-on:click="incrementVoteCount('no');showBarChart=true" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none">No</button>
-    </div>
+     <transition name="slide-fade">
+        <div v-if="!showBarChart">
+         <button v-on:click="incrementVoteCount('yes');showBarChart=true" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none z-0">Yes</button>
+         <button v-on:click="incrementVoteCount('no');showBarChart=true" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none z-0">No</button>
+        </div>
+      </transition>
     <transition name="slide-fade">
         <YesNoBar v-if="showBarChart" v-bind:chartData="this.setDataset" v-bind:chartOptions="state.chartOptions" YesNoBar/>
     </transition>
+    </div>
 </body>
 </div>
 </template>
@@ -384,6 +388,7 @@ export default {
 .slide-fade-leave-to {
   opacity: 0;
 }
+
 
 @keyframes moveBackLeg {
   0% {
