@@ -23,12 +23,14 @@
     <h3 class="m-8 text-black text-opacity-70 uppercase">Place your vote! </h3> 
      <transition name="slide-fade">
         <div v-if="!showBarChart">
-         <button v-on:click="incrementVoteCount('yes');showBarChart=true" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none z-0">Yes</button>
-         <button v-on:click="incrementVoteCount('no');showBarChart=true" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none z-0">No</button>
+         <button v-on:click="incrementVoteCount('yes'); this.showBarChart = true;" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none z-0">Yes</button>
+         <button v-on:click="incrementVoteCount('no'); this.showBarChart = true;" class="rounded m-2 p-2 w-32 text-black border-2 border-solid text-opacity-70 focus:outline-none z-0">No</button>
         </div>
       </transition>
     <transition name="slide-fade">
-        <YesNoBar v-if="showBarChart" v-bind:chartData="this.setDataset" v-bind:chartOptions="state.chartOptions" YesNoBar/>
+    <div class="container">
+        <YesNoBar v-if="showBarChart" :chartData="setDataset" :chartOptions="{responsive: true}" YesNoBar/>
+        </div>
     </transition>
     </div>
 </body>
@@ -43,54 +45,50 @@ export default {
   components: {
     YesNoBar
   },
-  data () {
-    return {
-      showBarChart: false,
-      state: {
-          chartData: {
-          // These labels appear in the legend and in the tooltips when hovering different arcs
-          labels: ['Yes', 'No']
-        },
-        chartOptions: {
-          responsive: true
-        }
-      }
-    }
-},
+  data: () => ({
+      showBarChart: false
+  }),
  async mounted() {
     // TODO - update this mounted method to be vue3 in style. 
     this.updateWheelSpinSpeed() 
-  },
-  async created() {
-    let date = new Date()
-    let formatedDate = date.getFullYear() + "-" + ('0' + (date.getMonth() + 1)).slice(-2) + "-" + ('0' + date.getDate()).slice(-2)
 
+    let date = new Date()
+    let dayOfMonth = ('0' + date.getDate()).slice(-2)
+    // This if statement will get the previous days month if the hour of the day is less than 9 in the morning. This means it can still be viewed past 12.
+    if(date.getHours() < 9){
+        dayOfMonth = ('0' + (date.getDate() -1)).slice(-2)
+    }
+    let formatedDate = date.getFullYear() + "-" + ('0' + (date.getMonth() + 1)).slice(-2) + "-" + dayOfMonth
     await this.asyncGetDrinkVote(formatedDate)
+
   },
   computed: {
     ...mapState({drinkVote: state => state.drinkVote}),
     setDataset(){
-      return {
+      return this.createDataset()
+    }
+  },
+  setup() {
+    const store = useStore();
+    return {
+      asyncPostDrinkVote: (payload) => store.dispatch('postDrinkVote', payload),
+      asyncGetDrinkVote: (date) => store.dispatch('getDrinkVote', date)
+    }
+  },
+  methods: {
+    createDataset: function (data = [this.drinkVote['yes_count'], this.drinkVote['no_count'], 0]){
+        return {
           datasets: [
             {
               label: 'Total Votes',
-              data: [this.drinkVote['yes_count'], this.drinkVote['no_count'], 0],
+              data: data,
               backgroundColor: '#80CBC4'
             },
           ],
           // These labels appear in the legend and in the tooltips when hovering different arcs
           labels: ['Yes', 'No']   
-    }
-    }
-  },
-  setup() {
-    const store = useStore();
-     return {
-      asyncPostDrinkVote: (payload) => store.dispatch('postDrinkVote', payload),
-      asyncGetDrinkVote: (date) => store.dispatch('getDrinkVote', date)
-    }
-  },
-   methods: {
+      }
+    },
     incrementVoteCount: async function(type){
         if (type == "yes"){
             let payload = {
@@ -106,9 +104,8 @@ export default {
               'yes_increment': 0,
               'no_increment': 1
             }  
-             this.asyncPostDrinkVote(payload);
-        }
-        
+            await this.asyncPostDrinkVote(payload);
+        }     
     },
     updateWheelSpinSpeed(){
         //  This function will change the speed of rotation the closer the time is to midnight

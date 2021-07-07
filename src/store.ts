@@ -3,7 +3,11 @@ import { createStore, useStore as baseUseStore, Store } from 'vuex'
 
 export const store = createStore({
 state: {
-      drinkVote: ['hello']
+      drinkVote: {
+        "date": "2021-07-05",
+        "yes_count": 6,
+        "no_count": 2
+    }
 },
 mutations: {
   setDrinkVote (state, dateVote) {

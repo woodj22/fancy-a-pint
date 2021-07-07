@@ -1,12 +1,10 @@
 <script>
 import { Bar } from 'vue3-chart-v2'
-import { useStore, mapState, mapGetters } from 'vuex'
 
 import { defineComponent } from 'vue'
 
 export default defineComponent({
   name:"YesNoBar",
-  template: "<template>{{ drinkVote }}</template>",
   extends: Bar,
    props: {
     chartData: {
@@ -17,6 +15,9 @@ export default defineComponent({
       type: Object,
       required: false
     },
+  },
+  mounted () {
+    this.renderChart(this.chartdata, this.chartOptions)
   }
 })
 </script>
