@@ -28,9 +28,7 @@
         </div>
       </transition>
     <transition name="slide-fade">
-    <div class="container">
         <YesNoBar v-if="showBarChart" :chartData="setDataset" :chartOptions="{responsive: true}" YesNoBar/>
-        </div>
     </transition>
     </div>
 </body>
@@ -51,20 +49,12 @@ export default {
  async mounted() {
     // TODO - update this mounted method to be vue3 in style. 
     this.updateWheelSpinSpeed() 
-
-    let date = new Date()
-    let dayOfMonth = ('0' + date.getDate()).slice(-2)
-    // This if statement will get the previous days month if the hour of the day is less than 9 in the morning. This means it can still be viewed past 12.
-    if(date.getHours() < 9){
-        dayOfMonth = ('0' + (date.getDate() -1)).slice(-2)
-    }
-    let formatedDate = date.getFullYear() + "-" + ('0' + (date.getMonth() + 1)).slice(-2) + "-" + dayOfMonth
-    await this.asyncGetDrinkVote(formatedDate)
-
+    this.fetchDrinkVotes()
+   
   },
   computed: {
     ...mapState({drinkVote: state => state.drinkVote}),
-    setDataset(){
+    setDataset: function (){
       return this.createDataset()
     }
   },
@@ -76,6 +66,17 @@ export default {
     }
   },
   methods: {
+    fetchDrinkVotes: async function (){
+        let date = new Date()
+        let dayOfMonth = ('0' + date.getDate()).slice(-2)
+        // This if statement will get the previous days month if the hour of the day is less than 9 in the morning. This means it can still be viewed past 12.
+        if(date.getHours() < 9){
+            dayOfMonth = ('0' + (date.getDate() -1)).slice(-2)
+        }
+        let formatedDate = date.getFullYear() + "-" + ('0' + (date.getMonth() + 1)).slice(-2) + "-" + dayOfMonth
+        
+        await this.asyncGetDrinkVote(formatedDate)
+    },
     createDataset: function (data = [this.drinkVote['yes_count'], this.drinkVote['no_count'], 0]){
         return {
           datasets: [
@@ -103,9 +104,9 @@ export default {
               'date': new Date().toISOString().split('T')[0],
               'yes_increment': 0,
               'no_increment': 1
-            }  
+            } 
             await this.asyncPostDrinkVote(payload);
-        }     
+        }
     },
     updateWheelSpinSpeed(){
         //  This function will change the speed of rotation the closer the time is to midnight

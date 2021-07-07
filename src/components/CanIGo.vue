@@ -42,12 +42,12 @@ export default {
       const dayOfWeek = new Date().getDay()
       // By default I have set it to be answering yes.
       let weeklyQuoteSelection = "yes"
-      // 4 is a wednesday 
-      if(dayOfWeek == 4) {
+      // 3 is a wednesday 
+      if(dayOfWeek == 3) {
         weeklyQuoteSelection = "maybe"
       }
-      // 3 is a tuesday. Anything before 3 will be answering no.
-      if (dayOfWeek <= 3) {
+      // 2 is a tuesday. Anything before 3 will be answering no.
+      if (dayOfWeek < 3) {
         weeklyQuoteSelection = "no"
       }
       const quotes =  this.weeklyQuotes[weeklyQuoteSelection]['quotes']

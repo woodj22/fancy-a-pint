@@ -16,8 +16,23 @@ export default defineComponent({
       required: false
     },
   },
+   computed: {
+    data: function() {
+      return this.chartData;
+    }
+  },
+   watch: {
+    data() {
+      this.renderBarChart();
+    }
+  },
   mounted () {
-    this.renderChart(this.chartdata, this.chartOptions)
+    this.renderBarChart()
+  },
+  methods: {
+      renderBarChart: function () {
+        this.renderChart(this.data, this.chartOptions)
+      }
   }
 })
 </script>
